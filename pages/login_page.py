@@ -14,7 +14,7 @@ class LoginPage(BasePage):
     USERNAME_INPUT = (By.ID, "user-name")
     PASSWORD_INPUT = (By.ID, "password")
     LOGIN_BUTTON = (By.ID, "login-button")
-    ERROR_MESSAGE = (By.CSS_SELECTOR, "[data-test="error"]")
+    ERROR_MESSAGE = (By.CSS_SELECTOR, "[data-test='error']")
     BOTTLENECK_IMAGE = (By.CLASS_NAME, "bot_column")
 
     def enter_username(self, username: str):

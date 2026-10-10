@@ -14,7 +14,7 @@ class Config:
 
     # Browser settings
     BROWSER = os.getenv("BROWSER", "chrome")
-    HEADLESS = os.getenv("HEADLESS", "false").lower() == "true"
+    HEADLESS = os.getenv("HEADLESS", "true").lower() == "true"
 
     # Timeouts
     IMPLICIT_WAIT = int(os.getenv("IMPLICIT_WAIT", "10"))

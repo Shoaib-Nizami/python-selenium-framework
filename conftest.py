@@ -30,7 +30,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--headless",
         action="store_true",
-        default=False,
+        default=True,   # ← False ko True karo
         help="Run browser in headless mode"
     )
     parser.addoption(
@@ -72,6 +72,8 @@ def driver(browser, headless):
         options = webdriver.ChromeOptions()
         if headless:
             options.add_argument("--headless=new")
+            options.add_argument("--dns-prefetch-disable")
+            options.add_argument("--disable-features=NetworkService")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--window-size=1920,1080")

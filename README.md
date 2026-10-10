@@ -72,7 +72,7 @@ python-selenium-framework/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/muhammadshoaib/python-selenium-framework.git
+git clone https://github.com/Shoaib-Nizami/python-selenium-framework
 cd python-selenium-framework
 ```
 
