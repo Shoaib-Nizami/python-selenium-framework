@@ -1,230 +1,241 @@
 # Python Selenium Framework
 
-> A robust and scalable test automation framework built with **Python**, **Selenium WebDriver**, and **Pytest** using the **Page Object Model (POM)** design pattern.
+> A production-grade test automation framework built with **Python 3.12**, **Selenium WebDriver**, and **Pytest**, following the **Page Object Model (POM)** design pattern.
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
-[![Selenium](https://img.shields.io/badge/Selenium-4.x-green)](https://www.selenium.dev/)
-[![Pytest](https://img.shields.io/badge/Pytest-latest-orange)](https://docs.pytest.org/)
-[![CI](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-brightgreen)](.github/workflows/tests.yml)
+[![Selenium Tests](https://github.com/Shoaib-Nizami/python-selenium-framework/actions/workflows/tests.yml/badge.svg)](https://github.com/Shoaib-Nizami/python-selenium-framework/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Selenium](https://img.shields.io/badge/Selenium-4.51-green)
+![Pytest](https://img.shields.io/badge/Pytest-9.1-orange)
+![Tests](https://img.shields.io/badge/tests-14%20passed-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 ---
 
-## Features
+## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
 | **Page Object Model (POM)** | Clean separation of page logic from test logic |
 | **Pytest + Fixtures** | Powerful test setup, teardown, and dependency injection |
 | **Multi-Browser Support** | Chrome and Firefox (headless & headed modes) |
+| **Headless by Default** | Optimized for CI/CD and WSL/SSH environments |
 | **Explicit Waits** | Smart, reliable element synchronization |
-| **Data-Driven Testing** | JSON and CSV-based test data support |
-| **HTML Reports** | Beautiful pytest-html test execution reports |
-| **Screenshot on Failure** | Automatic screenshot capture when a test fails |
+| **HTML Reports** | Self-contained pytest-html execution reports |
+| **Screenshot on Failure** | Automatic screenshot capture for debugging |
 | **GitHub Actions CI** | Automated test execution on every push and PR |
-| **Logging** | Structured logging for debugging and traceability |
-| **Configurable** | Environment-based configuration management |
+| **Structured Logging** | Console + file logging for traceability |
+| **Environment-Based Config** | Override via env variables or `config.py` |
+| **Parallel Execution** | Run tests across multiple workers with `pytest-xdist` |
 
 ---
 
-## Project Structure
+## 📊 Test Results
+
+**14 tests — All Passing** ✅
+
+| Suite | Tests | Coverage |
+|-------|-------|----------|
+| `test_login.py` | 8 | Valid login, invalid credentials, locked user, empty fields |
+| `test_inventory.py` | 6 | Page load, products display, cart, sorting, logout |
+| **Total** | **14** | **✅ 100% Pass** |
+
+**Demo site:** [saucedemo.com](https://www.saucedemo.com) — public Sauce Labs test site
+
+---
+
+## 📁 Project Structure
 
 ```
 python-selenium-framework/
 ├── README.md
+├── LICENSE
 ├── requirements.txt
 ├── pytest.ini
-├── conftest.py
+├── conftest.py                    # Pytest fixtures & CLI options
 ├── config/
-│   └── config.py
-├── pages/
-│   ├── base_page.py
-│   ├── login_page.py
-│   └── inventory_page.py
+│   └── config.py                  # Environment-based configuration
+├── pages/                         # Page Objects
+│   ├── base_page.py               # Common actions
+│   ├── login_page.py              # Login page
+│   └── inventory_page.py          # Products page
 ├── tests/
-│   ├── test_login.py
-│   └── test_inventory.py
+│   ├── test_login.py              # 8 login tests
+│   └── test_inventory.py          # 6 inventory tests
 ├── utils/
-│   ├── driver_factory.py
-│   └── logger.py
-├── reports/
-│   └── (generated HTML reports)
+│   ├── driver_factory.py          # WebDriver factory
+│   └── logger.py                  # Logging utility
+├── reports/                       # HTML reports (gitignored)
+├── screenshots/                   # Failure screenshots (gitignored)
 └── .github/
     └── workflows/
-        └── tests.yml
+        └── tests.yml              # GitHub Actions CI
 ```
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- **Python 3.9+**
-- **Selenium WebDriver 4.x**
-- **Pytest** (test runner)
-- **pytest-html** (HTML reporting)
-- **pytest-xdist** (parallel test execution)
-- **WebDriver Manager** (automatic driver management)
-- **GitHub Actions** (CI/CD)
+| Layer | Technology |
+|-------|-----------|
+| Language | Python 3.12 |
+| Automation | Selenium WebDriver 4.51 |
+| Test Runner | Pytest 9.1 |
+| Reporting | pytest-html 4.2 |
+| Parallelism | pytest-xdist 3.8 |
+| Driver Management | webdriver-manager 4.1 |
+| CI/CD | GitHub Actions |
+| OS Support | Linux (headless), Windows, macOS |
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Shoaib-Nizami/python-selenium-framework
+git clone https://github.com/Shoaib-Nizami/python-selenium-framework.git
 cd python-selenium-framework
 ```
 
-### 2. Create a Virtual Environment
+### 2. Create virtual environment
 
 ```bash
-python -m venv venv
+python3.12 -m venv venv
+
+# Linux / macOS
+source venv/bin/activate
 
 # Windows
 venv\Scripts\activate
-
-# macOS / Linux
-source venv/bin/activate
 ```
 
-### 3. Install Dependencies
+### 3. Install dependencies
 
 ```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Run the Tests
+### 4. Run tests
 
 ```bash
-# Run all tests
+# Run all tests (headless by default)
 pytest
 
-# Run with HTML report
-pytest --html=reports/report.html --self-contained-html
+# Verbose output
+pytest -v
 
-# Run in parallel (4 workers)
+# Parallel execution (4 workers)
 pytest -n 4
 
-# Run specific test file
+# Specific test file
 pytest tests/test_login.py -v
 
-# Run in headless mode
-pytest --headless
-
-# Run on Firefox
-pytest --browser=firefox
+# Specific test
+pytest tests/test_login.py::TestLogin::test_valid_login -v
 ```
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
-Edit `config/config.py` to customize:
+Framework is **environment-driven**. Override via CLI or environment variables:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `BASE_URL` | Application under test | `https://www.saucedemo.com` |
-| `BROWSER` | Default browser | `chrome` |
-| `HEADLESS` | Run in headless mode | `False` |
-| `IMPLICIT_WAIT` | Implicit wait timeout | `10` |
-| `EXPLICIT_WAIT` | Explicit wait timeout | `15` |
+| `BROWSER` | Default browser (`chrome` / `firefox`) | `chrome` |
+| `HEADLESS` | Run in headless mode | `true` |
+| `IMPLICIT_WAIT` | Implicit wait (seconds) | `10` |
+| `EXPLICIT_WAIT` | Explicit wait (seconds) | `15` |
 
-You can also override via CLI:
+**Examples:**
+
 ```bash
-pytest --browser=firefox --headless --base-url=https://example.com
+# Run on Firefox
+BROWSER=firefox pytest
+
+# Override base URL
+BASE_URL=https://example.com pytest
+
+# Run in headed mode (requires display)
+pytest --no-headless
 ```
 
 ---
 
-## Page Object Model (POM)
+## 🧪 Page Object Model
 
-Each page of the application has its own class in the `pages/` directory:
+Each page has its own class in `pages/`:
 
-- **`base_page.py`** - Common actions (click, send_keys, wait, screenshots)
-- **`login_page.py`** - Login page elements and actions
-- **`inventory_page.py`** - Inventory/product page elements and actions
+- **`base_page.py`** — Common actions (click, type, wait, screenshot)
+- **`login_page.py`** — Login page elements & actions
+- **`inventory_page.py`** — Products page elements & actions
 
-This pattern keeps tests clean, maintainable, and reusable.
-
----
-
-## Sample Test
+**Sample:**
 
 ```python
 # tests/test_login.py
-
 class TestLogin:
 
     def test_valid_login(self, login_page, inventory_page):
         login_page.login("standard_user", "secret_sauce")
-        assert inventory_page.is_on_inventory_page()
+        assert inventory_page.is_loaded()
 
     def test_invalid_login(self, login_page):
         login_page.login("invalid_user", "wrong_password")
-        assert login_page.get_error_message() ==                "Epic sadface: Username and password do not match"
+        assert login_page.is_error_visible()
 ```
 
 ---
 
-## Data-Driven Testing
+## 🔄 CI/CD — GitHub Actions
 
-Tests can be driven by JSON or CSV files:
+Every push and pull request triggers the test suite automatically:
 
-```python
-# tests/test_login.py
-import pytest
-from utils.data_reader import read_json
+- **OS**: Ubuntu latest
+- **Python**: 3.12
+- **Browser**: Chrome (headless)
+- **Artifacts**: HTML reports uploaded per run
 
-@pytest.mark.parametrize("data", read_json("login_data.json"))
-def test_login_with_json_data(self, login_page, data):
-    login_page.login(data["username"], data["password"])
-    assert login_page.is_logged_in() == data["expected"]
-```
+View workflow: [`.github/workflows/tests.yml`](.github/workflows/tests.yml)
 
 ---
 
-## CI/CD - GitHub Actions
+## 📈 Reporting
 
-Every push and pull request triggers the test suite automatically on:
-- Ubuntu (latest)
-- Python 3.9, 3.10, 3.11
-- Chrome & Firefox (headless)
-
-Test results and HTML reports are uploaded as artifacts.
-
-See `.github/workflows/tests.yml` for the full pipeline configuration.
-
----
-
-## Reporting
-
-After test execution, an HTML report is generated in the `reports/` folder:
+HTML reports are generated on every test run:
 
 ```bash
 pytest --html=reports/report.html --self-contained-html
 ```
 
 Reports include:
-- Test status (pass/fail/skip)
-- Execution time per test
-- Screenshots on failure
-- Environment details
-- Log output
+- ✅ Test status (pass / fail / skip)
+- ⏱ Execution time per test
+- 📸 Screenshots on failure
+- 🖥 Environment details
+- 📝 Captured log output
 
 ---
 
-## Author
+## 🐧 WSL / Headless Linux Support
+
+This framework works out of the box in **WSL**, **Docker**, and **SSH sessions** with no display (`$DISPLAY` empty). Chrome runs in headless mode by default with DNS resolver flags pre-configured to avoid `ERR_NAME_NOT_RESOLVED` errors.
+
+---
+
+## 👤 Author
 
 **Muhammad Shoaib**
-- Senior SQA / Python Engineer | SDET
-- AIOps / DevOps / SysOps
-- Karachi, Pakistan
+Senior SQA / Python Engineer | SDET | AIOps / DevOps / SysOps
+Karachi, Pakistan
 
-- [LinkedIn](https://pk.linkedin.com/in/muhammad-shoaib-b08b56291)
+- GitHub: [@Shoaib-Nizami](https://github.com/Shoaib-Nizami)
+- LinkedIn: [muhammad-shoaib-b08b56291](https://www.linkedin.com/in/muhammad-shoaib-b08b56291/)
 
 ---
 
-## License
+## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
